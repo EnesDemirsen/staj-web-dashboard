@@ -1,0 +1,514 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    display: flex;
+    height: 100vh;
+    overflow: hidden;
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+    background-color: #f3f4f6; /* Açık gri arka plan */
+}
+
+/* SOL MENÜ TASARIMI */
+.sidebar {
+    width: 260px;
+    background-color: #1f2937; /* Koyu tok gri */
+    color: white;
+    display: flex;
+    flex-direction: column;
+}
+
+.sidebar-header {
+    padding: 20px;
+    text-align: center;
+    background-color: #111827; /* Daha koyu başlık alanı */
+    border-bottom: 1px solid #374151;
+}
+
+.sidebar-header h3 {
+    color: #06b6d4; /* Cyan vurgusu */
+}
+
+.nav-links {
+    list-style: none;
+    margin-top: 20px;
+}
+
+.nav-links li {
+    padding: 15px 20px;
+    cursor: pointer;
+    border-left: 4px solid transparent;
+    transition: all 0.3s ease;
+}
+
+.nav-links li:hover {
+    background-color: #374151;
+}
+
+.nav-links li.active {
+    background-color: #374151;
+    border-left: 4px solid #06b6d4; /* Aktif sekmeye Cyan çizgisi */
+    font-weight: bold;
+}
+
+.logout-btn {
+    margin-top: auto;
+    padding: 15px;
+    background-color: #dc2626; /* Kırmızı çıkış butonu */
+    color: white;
+    border: none;
+    cursor: pointer;
+    font-weight: bold;
+    transition: background-color 0.3s;
+}
+
+.logout-btn:hover {
+    background-color: #b91c1c;
+}
+
+/* SAĞ İÇERİK ALANI */
+.main-content {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    height: 100vh; 
+    overflow-y: auto;
+}
+
+.topbar {
+    background-color: white;
+    padding: 20px 30px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+}
+
+.topbar h2 {
+    font-size: 1.2rem;
+    color: #1f2937;
+}
+
+.date-info {
+    color: #6b7280;
+    font-size: 0.9rem;
+}
+
+/* SEKMELERİ GİZLEME/GÖSTERME */
+.tab-content {
+    display: none;
+    padding: 30px;
+}
+
+.active-tab {
+    display: block;
+}
+
+.tab-content h3 {
+    color: #1f2937;
+    margin-bottom: 10px;
+}
+
+.tab-content p {
+    color: #4b5563;
+    margin-bottom: 20px;
+}
+
+/* İçi Doldurulacak Alanlar İçin Şablon Kutusu */
+.placeholder-box {
+    background-color: white;
+    padding: 40px;
+    text-align: center;
+    border: 2px dashed #d1d5db;
+    border-radius: 8px;
+    color: #9ca3af;
+    font-size: 1.1rem;
+}
+
+/* todo - Takımlar kısmının veri ekleme alanının kodları
+
+/* FORM IZGARASI (Yan Yana Kartlar) */
+.form-grid {
+    display: flex;
+    gap: 20px;
+    margin-bottom: 20px;
+}
+
+.admin-card {
+    flex: 1;
+    background-color: white;
+    padding: 25px;
+    border-radius: 10px;
+    box-shadow: 0 4px 6px rgba(0,0,0,0.05);
+    display: flex;
+    flex-direction: column;
+}
+
+.admin-card h4 {
+    margin-bottom: 20px;
+    padding: 10px;
+    color: #1f2937;
+    border-bottom: 2px solid #f3f4f6;
+    padding-bottom: 10px;
+}
+.input-group {
+    margin-bottom: 20px;
+    text-align: left;
+}
+
+.input-group label {
+    display: block;
+    color: #4b5563; /* Koyu gri, okunaklı */
+    font-size: 13px;
+    margin-bottom: 5px;
+    font-weight: 500;
+}
+
+.input-group input {
+    width: 100%;
+    padding: 12px 15px;
+    background-color: #f9fafb; /* Beyaza yakın, çok uçuk gri arkaplan */
+    border: 1px solid #d1d5db; /* İnce ve zarif kenarlık */
+    border-radius: 8px;
+    color: #1f2937; /* Koyu metin rengi */
+    font-size: 15px;
+    box-sizing: border-box;
+    outline: none;
+    transition: border-color 0.3s ease;
+}
+
+.input-group input:focus {
+    border-color: #06b6d4; /* Tıklanınca iOS uygulamasındaki gibi Cyan oluyor */
+}
+
+.table-card {
+    flex: none;
+    width: 100%;
+}
+
+/* YENİ INPUT TİPİ: SELECT (Açılır Menü) */
+.custom-select {
+    width: 100%;
+    padding: 12px 15px;
+    background-color: #f9fafb;
+    border: 1px solid #d1d5db;
+    border-radius: 8px;
+    font-size: 15px;
+    color: #374151;
+    outline: none;
+}
+
+.custom-select:focus {
+    border-color: #06b6d4;
+}
+
+/* KAYDET BUTONU */
+.action-btn {
+    width: 100%;
+    padding: 12px;
+    background-color: #10b981; /* Başarı yeşili */
+    color: white;
+    border: none;
+    border-radius: 8px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: 0.3s;
+    margin-top: auto;
+}
+
+.action-btn:hover {
+    background-color: #059669;
+}
+
+/* VERİ TABLOSU TASARIMI */
+.data-table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+.data-table th, .data-table td {
+    padding: 12px 15px;
+    text-align: left;
+    border-bottom: 1px solid #e5e7eb;
+}
+
+.data-table th {
+    background-color: #f9fafb;
+    color: #4b5563;
+    font-size: 14px;
+}
+
+.data-table td {
+    color: #1f2937;
+    font-size: 15px;
+}
+
+/* HIZLI GÜNCELLEME BUTONLARI */
+.mini-btn {
+    padding: 6px 12px;
+    border: none;
+    border-radius: 4px;
+    color: white;
+    font-weight: bold;
+    cursor: pointer;
+    margin-right: 5px;
+    font-size: 12px;
+}
+
+.btn-goal { background-color: #06b6d4; }
+.btn-goal:hover { background-color: #0891b2; }
+
+.btn-assist { background-color: #8b5cf6; }
+.btn-assist:hover { background-color: #7c3aed; }
+
+/*! silme fonksiyonlarının tasarımı*/
+.btn-decrease { 
+    background-color: #f87171; /* Açık Kırmızı */
+}
+.btn-decrease:hover { 
+    background-color: #ef4444; 
+}
+
+.btn-delete { 
+    background-color: #dc2626; /* Koyu Kırmızı */
+    margin-left: 10px; /* Diğer butonlarla arasına boşluk koy */
+}
+.btn-delete:hover { 
+    background-color: #b91c1c; 
+}
+
+
+/* todo - Gruplar kısmı kodları
+
+/* GRUPLAR SEKMESİ TASARIMI */
+.tab-header-flex {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 25px;
+}
+
+.new-group-btn {
+    width: auto;
+    padding: 12px 24px;
+    background-color: #0ea5e9; /* Farklı bir mavi tonu */
+}
+
+.new-group-btn:hover {
+    background-color: #0284c7;
+}
+
+/* Grup Kartları Izgarası */
+.groups-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    gap: 20px;
+    align-items: start;
+}
+
+/* Tekil Grup Kartı */
+.group-card {
+    background-color: white;
+    border-radius: 10px;
+    box-shadow: 0 4px 6px rgba(0,0,0,0.05);
+    overflow: hidden;
+}
+
+.group-card-header {
+    background-color: #1f2937;
+    color: white;
+    padding: 15px;
+    text-align: center;
+    font-size: 18px;
+    font-weight: bold;
+}
+
+.group-card-body {
+    padding: 20px;
+}
+
+/* Gruba takım ekleme alanı */
+.group-add-section {
+    display: flex;
+    gap: 10px;
+    margin-bottom: 15px;
+}
+
+/* Grup içi takım listesi */
+.group-team-list {
+    list-style: none;
+    margin-top: 15px;
+}
+
+.group-team-list li {
+    padding: 10px;
+    background-color: #f9fafb;
+    border: 1px solid #e5e7eb;
+    border-radius: 6px;
+    margin-bottom: 8px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-weight: 500;
+    color: #374151;
+}
+
+/* todo - Eleme aşaması kodları*/
+.match-card {
+    background-color: white;
+    border-radius: 10px;
+    box-shadow: 0 4px 6px rgba(0,0,0,0.05);
+    padding: 20px;
+    text-align: center;
+    border-top: 4px solid #10b981; /* Üstünde şık yeşil bir çizgi */
+}
+
+.match-teams {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 15px;
+}
+
+.team-name {
+    flex: 1;
+    font-weight: bold;
+    font-size: 16px;
+    color: #1f2937;
+}
+
+.vs-badge {
+    background-color: #f3f4f6;
+    padding: 5px 10px;
+    border-radius: 5px;
+    font-size: 12px;
+    font-weight: bold;
+    color: #9ca3af;
+}
+
+/* SKOR GİRİŞ KUTULARI */
+.score-inputs {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 15px;
+    margin-bottom: 15px;
+}
+
+.score-input {
+    width: 60px;
+    height: 60px;
+    text-align: center;
+    font-size: 24px;
+    font-weight: bold;
+    border: 2px solid #e5e7eb;
+    border-radius: 8px;
+    color: #1f2937;
+    outline: none;
+    transition: 0.3s;
+}
+
+.score-input:focus {
+    border-color: #06b6d4;
+}
+
+.score-dash {
+    font-size: 24px;
+    font-weight: bold;
+    color: #9ca3af;
+}
+
+.save-score-btn {
+    background-color: #0ea5e9;
+}
+.save-score-btn:hover {
+    background-color: #0284c7;
+}
+
+/*! ceza ve eleme sistemi tasarımları */
+.badge-active {
+    background-color: #10b981;
+    color: white;
+    padding: 4px 10px;
+    border-radius: 4px;
+    font-size: 12px;
+    font-weight: bold;
+}
+
+.badge-dq {
+    background-color: #dc2626;
+    color: white;
+    padding: 4px 10px;
+    border-radius: 4px;
+    font-size: 12px;
+    font-weight: bold;
+}
+
+.btn-warning {
+    background-color: #f59e0b; /* Turuncu-Sarı */
+    color: white;
+}
+.btn-warning:hover {
+    background-color: #d97706;
+}
+
+.btn-dq {
+    background-color: #dc2626;
+    color: white;
+    padding: 6px 12px;
+    border: none;
+    border-radius: 4px;
+    font-weight: bold;
+    cursor: pointer;
+}
+.btn-dq:hover { background-color: #b91c1c; }
+
+.btn-undq {
+    background-color: #3b82f6; /* Mavi (Geri Al) */
+    color: white;
+    padding: 6px 12px;
+    border: none;
+    border-radius: 4px;
+    font-weight: bold;
+    cursor: pointer;
+}
+.btn-undq:hover { background-color: #2563eb; }
+
+/** Oyuncu istatistik butonlar kısmı*/
+.stat-stepper {
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    gap: 8px; /* Butonlar ve sayı arasındaki boşluk */
+}
+
+.stepper-btn {
+    width: 28px;
+    height: 28px;
+    border-radius: 6px;
+    border: 1px solid #e5e7eb;
+    background-color: #f9fafb;
+    color: #4b5563;
+    font-weight: bold;
+    font-size: 18px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+/* Hover (Üzerine gelince) Efektleri - Hangi istatistikse onun rengini alır */
+.stepper-btn.goal:hover { background-color: #06b6d4; color: white; border-color: #06b6d4; }
+.stepper-btn.assist:hover { background-color: #8b5cf6; color: white; border-color: #8b5cf6; }
+.stepper-btn.penalty:hover { background-color: #ef4444; color: white; border-color: #ef4444; }
+
+.stat-value {
+    font-size: 16px;
+    font-weight: bold;
+    min-width: 24px;
+    text-align: center;
+}

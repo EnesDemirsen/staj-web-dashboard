@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Erdemli Belediyesi - Kontrol Paneli</title>
+    <link rel="stylesheet" href="css/dashboard.css">
+</head>
+<body>
+
+    <!-- SOL MENÜ (SIDEBAR) -->
+    <div class="sidebar">
+        <div class="sidebar-header">
+            <h3>Yönetim Paneli</h3>
+        </div>
+        <ul class="nav-links">
+            <li class="active" onclick="showTab('takimlarTab', this)">Takımlar & Oyuncular</li>
+            <li onclick="showTab('gruplarTab', this)">Grup Yönetimi</li>
+            <li onclick="showTab('elemelerTab', this)">Eleme Ağacı</li>
+        </ul>
+        <button class="logout-btn" onclick="logout()">Çıkış Yap</button>
+    </div>
+
+    <!-- SAĞ İÇERİK ALANI (MAIN CONTENT) -->
+    <div class="main-content">
+        
+        <!-- ÜST BİLGİ ÇUBUĞU -->
+        <header class="topbar">
+            <h2>Hoş Geldiniz, Admin</h2>
+            <div class="date-info" id="currentDate">Tarih: --/--/----</div>
+        </header>
+
+   <!-- İÇERİK: TAKIMLAR & OYUNCULAR -->
+<div id="takimlarTab" class="tab-content active-tab">
+    
+    <div class="form-grid">
+        <!-- TAKIM EKLEME KARTI -->
+        <div class="admin-card">
+            <h4>Yeni Takım Ekle</h4>
+            <div class="input-group">
+                <label>Takım Adı</label>
+                <input type="text" id="teamName" placeholder="Örn: Kargıpınarı">
+            </div>
+            <div class="input-group">
+                <label>Teknik Direktör</label>
+                <input type="text" id="managerName" placeholder="Örn: Ahmet Hoca">
+            </div>
+            <button class="action-btn" onclick="addTeam()">Takımı Kaydet</button>
+        </div>
+
+        <!-- OYUNCU EKLEME KARTI -->
+        <div class="admin-card">
+            <h4>Yeni Oyuncu Ekle</h4>
+            <div class="input-group">
+                <label>Takım Seç</label>
+                <select id="teamSelect" class="custom-select">
+                    <option value="">Önce takım ekleyin...</option>
+                </select>
+            </div>
+            <div class="input-group">
+                <label>Oyuncu Adı</label>
+                <input type="text" id="playerName" placeholder="Örn: Ali Yılmaz">
+            </div>
+            <button class="action-btn" onclick="addPlayer()">Oyuncuyu Kaydet</button>
+        </div>
+    </div>
+
+    <!-- TAKIM DURUM YÖNETİMİ (YENİ EKLENDİ) -->
+    <div class="admin-card table-card" style="margin-bottom: 20px;">
+        <h4>Kayıtlı Takımlar ve Diskalifiye Durumu</h4>
+        <table class="data-table">
+            <thead>
+                <tr>
+                    <th>Takım Adı</th>
+                    <th>Durum</th>
+                    <th>İşlem (Diskalifiye)</th>
+                </tr>
+            </thead>
+            <tbody id="teamTableBody">
+                <!-- Javascript ile dolacak -->
+            </tbody>
+        </table>
+    </div>
+
+    <!-- OYUNCU İSTATİSTİK TABLOSU (CEZALAR EKLENDİ) -->
+    <div class="admin-card table-card">
+        <h4>Oyuncu İstatistikleri ve Cezalar</h4>
+        <table class="data-table">
+            <thead>
+                <tr>
+                    <th>Oyuncu Adı</th>
+                    <th>Takımı</th>
+                    <th>Gol</th>
+                    <th>Asist</th>
+                    <th>Ceza (Maç)</th>
+                    <th>İşlem</th>
+                </tr>
+            </thead>
+            <tbody id="playerTableBody">
+                <!-- Javascript ile otomatik dolacak -->
+            </tbody>
+        </table>
+    </div>
+
+</div>
+
+       <!-- İÇERİK: GRUP YÖNETİMİ -->
+<div id="gruplarTab" class="tab-content">
+    
+    <div class="tab-header-flex">
+        <div>
+            <h3>Grup Yönetimi (Kura Sonrası)</h3>
+            <p>Takımları oluşturduğunuz gruplara yerleştirin.</p>
+        </div>
+        <button class="action-btn new-group-btn" onclick="createNewGroup()">+ Yeni Grup Oluştur</button>
+    </div>
+
+    <!-- Grupların yan yana dizileceği ızgara alanı -->
+    <div id="groupsContainer" class="groups-grid">
+        <!-- JavaScript ile buraya A Grubu, B Grubu kartları eklenecek -->
+    </div>
+
+</div>
+
+       <!-- İÇERİK: ELEME AĞACI -->
+<div id="elemelerTab" class="tab-content">
+    
+    <div class="tab-header-flex">
+        <div>
+            <h3>Eleme Ağacı Yönetimi</h3>
+            <p>İstediğiniz turu seçin, eşleşmeleri manuel oluşturun ve skorları girin.</p>
+        </div>
+        <!-- Aşama Seçici Menü -->
+        <select id="stageSelect" class="custom-select" style="width: auto; font-weight: bold; background-color: #1f2937; color: white; border:none;" onchange="renderMatches()">
+            <option value="Son 32">Son 32 Turu</option>
+            <option value="Son 16">Son 16 Turu</option>
+            <option value="Çeyrek Final">Çeyrek Final</option>
+            <option value="Yarı Final">Yarı Final</option>
+            <option value="Final">Final</option>
+        </select>
+    </div>
+
+    <!-- YENİ EŞLEŞME OLUŞTURMA ALANI -->
+    <div class="admin-card" style="margin-bottom: 25px; text-align: center;">
+        
+        <!-- Üst Kat: Takımlar ve VS -->
+        <div style="display: flex; justify-content: center; align-items: flex-start; gap: 20px; margin-bottom: 25px;">
+            
+            <div class="input-group" style="flex: 1; margin: 0; text-align: left;">
+                <label>1. Takım (Ev Sahibi)</label>
+                <select id="team1Select" class="custom-select">
+                    <!-- Javascript ile dolacak -->
+                </select>
+            </div>
+            
+            <div style="font-weight: 900; color: #000; font-size: 24px; padding-top: 25px;">VS</div>
+            
+            <div class="input-group" style="flex: 1; margin: 0; text-align: left;">
+                <label>2. Takım (Deplasman)</label>
+                <select id="team2Select" class="custom-select">
+                    <!-- Javascript ile dolacak -->
+                </select>
+            </div>
+            
+        </div>
+        
+        <!-- Alt Kat: Merkezlenmiş Buton -->
+        <button class="action-btn" style="width: 250px; margin: 0 auto; display: block;" onclick="createMatch()">Eşleştir</button>
+        
+    </div>
+
+    <!-- MAÇLARIN LİSTELENECEĞİ ALAN -->
+    <div id="matchesContainer" class="groups-grid">
+        <!-- Javascript ile buraya maç kartları gelecek -->
+    </div>
+
+</div>
+
+    </div>
+
+    <script src="js/dashboard.js"></script>
+</body>
+</html>
